@@ -42,6 +42,16 @@ class TaskDataBase(DataBase):
             return True
         return False
 
+    def revert(self, id) -> bool:
+        fin = self.send_query('select fin from task where id = ' + str(id) + ';')[0][0]
+        if fin:
+            self.send_query('update task set fin = 0 where id = ' + str(id) + ' ;')
+            self.send_query(
+                'update task set fin_date = null where id = ' + str(id) + ';'
+            )
+            return True
+        return False
+
     def get_task(self, id: int) -> str:
         return self.send_query('select * from task where id = ' + str(id) + ';')[0]
 
