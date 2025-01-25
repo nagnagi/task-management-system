@@ -1,0 +1,28 @@
+new:
+    prject
+    task
+    todo
+
+get:
+    project <id>
+    task <id>
+    todolist <id>
+    todo <todoid> <id>
+
+list:
+    project
+    task
+    todolist
+    todo <todoid>
+
+set:
+    todo <todoid> <taskid>
+
+delete:
+    project <id>
+    task <id>
+    todolist <id>
+    todo <todoid> <id>
+
+check:
+    task <id>
