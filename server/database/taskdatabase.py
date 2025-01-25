@@ -22,7 +22,7 @@ class TaskDataBase(DataBase):
         sql = 'INSERT INTO task (' + keys + ') VALUES (' \
             + '0' + ', ' \
             + str(priority) + ', '\
-            + 'date(' + str(add_date) + '), '\
+            + 'date("' + str(add_date) + '"), '\
             + 'null, '\
             + '"' + name + '", '\
             + '"' + discription + '", '\
@@ -32,9 +32,12 @@ class TaskDataBase(DataBase):
         self.send_query(sql)
 
     def get_name(self, id: int) -> str:
-        return self.send_query('select name from task where id = ' + str(id))[0][0]
+        return self.send_query('select name from task where id = ' + str(id) + ' ;')[0][0]
 
-    def show_all(self) -> list[tuple]:
+    def get_id(self, name: str) -> int:
+        return self.send_query('select id from task where name = "' + str(name) + '";')[0][0]
+
+    def get_all(self) -> list[tuple]:
         return self.show_table('task')
 
     def delete_all(self) -> list[tuple]:
