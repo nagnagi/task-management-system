@@ -38,7 +38,7 @@ class CommandLine:
         if words[0] == 'project':
             return self.new_project(words[1:])
         elif words[0] == 'task':
-            pass
+            return self.new_task(words[1:])
         elif words[0] == 'todo':
             pass
 
@@ -52,3 +52,20 @@ class CommandLine:
             raise Exception('Error') # [TODO] エラー作る
         else:
             return self.project_db.insert_project(*words)
+
+    def new_task(self, words: list[str]):
+        if len(words) == 0:
+            args = []
+            for i in range(len(self.task_db.keys)):
+                if self.task_db.keys[i] == 'fin':
+                    continue
+                if self.task_db.keys[i] == 'add_date':
+                    continue
+                if self.task_db.keys[i] == 'fin_date':
+                    continue
+                args.append(input(self.task_db.keys[i] + '?> '))
+            return self.task_db.insert_task(*args)
+        elif len(words) < len(self.project_db.keys):
+            raise Exception('Error') # [TODO] エラー作る
+        else:
+            return self.task_db.insert_task(*words)
