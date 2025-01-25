@@ -34,7 +34,7 @@ class CommandLine:
         elif words[0] == 'delete':
             return self.delete(words[1:])
         elif words[0] == 'check':
-            pass
+            return self.check(words[1:])
 
     def new(self, words: list[str]):
         if words[0] == 'project':
@@ -67,7 +67,7 @@ class CommandLine:
                     continue
                 args.append(input(self.task_db.keys[i] + '?> '))
             return self.task_db.insert_task(*args)
-        elif len(words) < len(self.task_db.keys):
+        elif len(words) < len(self.task_db.keys) - 3:
             raise Exception('Error') # [TODO] エラー作る
         else:
             return self.task_db.insert_task(*words)
@@ -77,14 +77,14 @@ class CommandLine:
 
     def get(self, words: list[str]):
         if words[0] == 'project':
-            return list(map(Project.from_tuple, self.project_db.get_all()))
+            return self.project_db[int(words[1])]
         elif words[0] == 'task':
-            return list(map(Task.from_tuple, self.task_db.get_all()))
+            return self.task_db[int(words[1])]
         elif words[0] == 'todolist':
-            return list(map(ToDoList.from_tuple, self.todolist_db.get_all()))
+            return self.todolist_db[int(words[1])]
         elif words[0] == 'todo':
             self.todo_db = ToDoDataBase(int(words[1]))
-            return list(map(ToDo.from_tuple, self.todo_db.get_all()))
+            return self.todo_db[int(words[2])]
 
     def set(self, words: list[str]):
         if words[0] == 'todo':
@@ -104,3 +104,10 @@ class CommandLine:
         elif words[0] == 'todo':
             self.todo_db = ToDoDataBase(words[1])
             return self.todo_db.delete_at(int(words[2]))
+
+    def check(self, words: list[str]):
+        if words[0] == 'task':
+            return self.check_task(words[1:])
+
+    def check_task(self, words: list[str]):
+        return self.task_db.check(int(words[0]))
