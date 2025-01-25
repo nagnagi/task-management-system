@@ -1,5 +1,6 @@
 import sys
 import os
+from pathlib import Path
 
 from database.dataclasses.project import Project
 from database.dataclasses.task import Task
@@ -37,6 +38,8 @@ class CommandLine:
             return self.delete(words[1:])
         elif words[0] == 'check':
             return self.check(words[1:])
+        elif words[0] == 'help':
+            return self.help()
 
     def new(self, words: list[str]):
         if words[0] == 'project':
@@ -124,3 +127,7 @@ class CommandLine:
 
     def check_task(self, words: list[str]):
         return self.task_db.check(int(words[0]))
+
+    def help(self):
+        with open(str(Path(__file__).parent) + '/help.txt', 'r', encoding='utf-8') as f:
+            return f.read()
