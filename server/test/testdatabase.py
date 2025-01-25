@@ -33,3 +33,4 @@ ic(todolist_db[1])
 
 task_db.delete_all()
 project_db.delete_all()
+todolist_db.delete_all()
