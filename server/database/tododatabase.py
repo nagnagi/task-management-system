@@ -35,6 +35,5 @@ class ToDoDataBase(DataBase):
 
         sql = 'INSERT INTO ' + self.table_name + ' (' + keys + ') VALUES (' \
             + str(task_id) + ');'
-        print(sql)
 
         self.send_query(sql)

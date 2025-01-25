@@ -36,6 +36,5 @@ class ToDoListDataBase(DataBase):
         sql = 'INSERT INTO ' + self.table_name + ' (' + keys + ') VALUES (' \
             + str(todo_id) + ', ' \
             + 'date("' + str(datetime.now().date()) + '"));'
-        print(sql)
 
         self.send_query(sql)

@@ -40,7 +40,6 @@ class TaskDataBase(DataBase):
             + '"' + name + '", '\
             + '"' + discription + '", '\
             + str(project_id) + ')'
-        print(sql)
 
         self.send_query(sql)
 

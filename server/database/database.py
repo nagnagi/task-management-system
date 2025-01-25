@@ -30,6 +30,7 @@ class DataBase:
         self.send_query('delete from ' + self.table_name + ' where 1;')
 
     def send_query(self, query: str) -> list[tuple]:
+        print(query)
         self.cursor.execute(query)
         result = self.cursor.fetchall()
         self.connection.commit()

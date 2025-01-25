@@ -32,7 +32,6 @@ class ProjectDataBase(DataBase):
             + '"' + name + '", ' \
             + '"' + discription + '", ' \
             + 'date("' + due_date + '"));'
-        print(sql)
 
         self.send_query(sql)
 
