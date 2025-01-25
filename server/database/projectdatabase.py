@@ -1,5 +1,7 @@
 from database.database import DataBase
 
+from database.dataclasses.project import Project
+
 class ProjectDataBase(DataBase):
     def __init__(self) -> None:
         super().__init__()
@@ -7,6 +9,12 @@ class ProjectDataBase(DataBase):
 
     def __del__(self) -> None:
         super().__del__()
+
+    def __getitem__(self, index: int) -> Project:
+        return self.at_to_data(index)
+
+    def at_to_data(self, id: int) -> Project:
+        return Project.from_tuple(self.at(id))
 
     def get_project(self, id: int) -> str:
         return self.send_query('select * from project where id = ' + str(id) + ';')[0]

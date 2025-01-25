@@ -1,6 +1,8 @@
 from database.database import DataBase
 from datetime import datetime
 
+from database.dataclasses.task import Task
+
 class TaskDataBase(DataBase):
     def __init__(self):
         super().__init__()
@@ -8,6 +10,12 @@ class TaskDataBase(DataBase):
 
     def __del__(self):
         super().__del__()
+
+    def __getitem__(self, index: int) -> Task:
+        return self.at_to_data(index)
+
+    def at_to_data(self, id: int) -> Task:
+        return Task.from_tuple(self.at(id))
 
     def insert_task(
         self,

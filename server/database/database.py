@@ -1,6 +1,8 @@
 import sqlite3
 from pathlib import Path
 
+from database.dataclasses.data import Data
+
 class DataBase:
     def __init__(self):
         dbpath = str(Path(__file__).parent) + '/data.sqlite'
@@ -11,8 +13,11 @@ class DataBase:
         self.cursor.close()
         self.connection.close()
 
-    def __getitem__(self, index: int) -> tuple:
-        return self.at(index)
+    def __getitem__(self, index: int) -> Data:
+        return self.at_to_data(index)
+
+    def at_to_data(self, id: int) -> Data:
+        return Data.from_tuple(self.at(id))
 
     def at(self, id: int) -> tuple:
         return self.send_query('select * from task where id = ' + str(id) + ';')[0]
