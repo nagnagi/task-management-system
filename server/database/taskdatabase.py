@@ -1,5 +1,5 @@
 from database.database import DataBase
-import datetime
+from datetime import datetime
 
 class TaskDataBase(DataBase):
     def __init__(self):
@@ -30,6 +30,20 @@ class TaskDataBase(DataBase):
         print(sql)
 
         self.send_query(sql)
+
+    def check(self, id: int) -> bool:
+        fin = self.send_query('select fin from task where id = ' + str(id) + ';')[0][0]
+        if not fin:
+            self.send_query('update task set fin = 1 where id = ' + str(id) + ' ;')
+            self.send_query(
+                'update task set fin_date = date("' + str(datetime.now().date())
+                + '") where id = ' + str(id) + ';'
+            )
+            return True
+        return False
+
+    def get_task(self, id: int) -> str:
+        return self.send_query('select * from task where id = ' + str(id) + ';')[0]
 
     def get_name(self, id: int) -> str:
         return self.send_query('select name from task where id = ' + str(id) + ' ;')[0][0]
