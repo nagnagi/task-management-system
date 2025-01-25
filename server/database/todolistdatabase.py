@@ -30,7 +30,7 @@ class ToDoListDataBase(DataBase):
         result = self.send_query(
             'create table todo'
             + str(todo_id)
-            + ' (task_id integer)'
+            + ' (id integer primary key, task_id integer)'
         )
         self.insert_todolist(todo_id)
         return result
