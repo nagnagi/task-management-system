@@ -28,7 +28,7 @@ class ProjectDataBase(DataBase):
             keys += self.keys[i] + ', '
         keys += self.keys[len(self.keys) - 1]
 
-        sql = 'INSERT INTO project (' + keys + ') VALUES (' \
+        sql = 'INSERT INTO '+ self.table_name +' (' + keys + ') VALUES (' \
             + '"' + name + '", ' \
             + '"' + discription + '", ' \
             + 'date("' + due_date + '"));'
@@ -44,9 +44,3 @@ class ProjectDataBase(DataBase):
 
     def get_id(self, name: str) -> int:
         return self.send_query('select id from project where name = "' + str(name) + '";')[0][0]
-
-    def get_all(self) -> list[tuple]:
-        return self.show_table()
-
-    def delete_all(self) -> list[tuple]:
-        return self.delete_from_table()

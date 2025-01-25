@@ -23,7 +23,6 @@ class TaskDataBase(DataBase):
     def insert_task(
         self,
         priority: int,
-        add_date: str,
         name: str,
         discription: str,
         project_id: int
@@ -33,10 +32,10 @@ class TaskDataBase(DataBase):
             keys += self.keys[i] + ', '
         keys += self.keys[len(self.keys) - 1]
 
-        sql = 'INSERT INTO task (' + keys + ') VALUES (' \
+        sql = 'INSERT INTO ' + self.table_name + ' (' + keys + ') VALUES (' \
             + '0' + ', ' \
             + str(priority) + ', '\
-            + 'date("' + str(add_date) + '"), '\
+            + 'date("' + str(datetime.now().date()) + '"), '\
             + 'null, '\
             + '"' + name + '", '\
             + '"' + discription + '", '\
@@ -72,12 +71,6 @@ class TaskDataBase(DataBase):
     def get_id(self, name: str) -> int:
         return self.send_query('select id from task where name = "' + str(name) + '";')[0][0]
 
-    def get_all(self) -> list[tuple]:
-        return self.show_table()
-
     def get_project(self, id: int) -> Project:
         print(ProjectDataBase().at(self[id].project_id))
         return Project.from_tuple(ProjectDataBase().at(self[id].project_id))
-
-    def delete_all(self) -> list[tuple]:
-        return self.delete_from_table()

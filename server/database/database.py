@@ -23,10 +23,10 @@ class DataBase:
     def at(self, id: int) -> tuple:
         return self.send_query('select * from ' + self.table_name + ' where id = ' + str(id) + ';')[0]
 
-    def show_table(self) -> list[tuple]:
+    def get_all(self) -> list[tuple]:
         return self.send_query('select * from ' + self.table_name + ';')
 
-    def delete_from_table(self) -> None:
+    def delete_all(self) -> None:
         self.send_query('delete from ' + self.table_name + ' where 1;')
 
     def send_query(self, query: str) -> list[tuple]:
