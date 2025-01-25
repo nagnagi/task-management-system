@@ -1,6 +1,7 @@
 import sys
 import os
 from pathlib import Path
+from io import TextIOWrapper
 
 from database.dataclasses.project import Project
 from database.dataclasses.task import Task
@@ -14,14 +15,32 @@ from database.todolistdatabase import ToDoListDataBase
 
 
 class CommandLine:
-    def __init__(self):
+    def __init__(
+        self,
+        filein: TextIOWrapper | None = None,
+        fileout: TextIOWrapper | None = None,
+        show_prompt: bool = True
+    ):
         self.project_db = ProjectDataBase()
         self.task_db = TaskDataBase()
         self.todo_db = ToDoDataBase()
         self.todolist_db = ToDoListDataBase()
 
+        if filein is None:
+            self.filein = sys.stdin
+        if fileout is None:
+            self.fileout = sys.stdout
+
+        self.show_prompt = show_prompt
+
+    def read_line(self, prompt: str) -> str:
+        if self.show_prompt:
+            self.fileout.write(prompt)
+            self.fileout.flush()
+        return self.filein.readline().strip('\n')
+
     def input(self):
-        command = input('> ')
+        command = self.read_line('> ')
         words = command.split()
         return self.select_method(words)
 
@@ -55,7 +74,7 @@ class CommandLine:
         if len(words) == 0:
             args = []
             for i in range(len(self.project_db.keys)):
-                args.append(input(self.project_db.keys[i] + '?> '))
+                args.append(self.read_line(self.project_db.keys[i] + '?> '))
             return self.project_db.insert_project(*args)
         elif len(words) < len(self.project_db.keys):
             raise Exception('Error') # [TODO] エラー作る
@@ -72,7 +91,7 @@ class CommandLine:
                     continue
                 if self.task_db.keys[i] == 'fin_date':
                     continue
-                args.append(input(self.task_db.keys[i] + '?> '))
+                args.append(self.read_line(self.task_db.keys[i] + '?> '))
             return self.task_db.insert_task(*args)
         elif len(words) < len(self.task_db.keys) - 3:
             raise Exception('Error') # [TODO] エラー作る
