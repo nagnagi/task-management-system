@@ -6,6 +6,9 @@ class TaskDataBase(DataBase):
         super().__init__()
         self.keys = ['fin', 'priority', 'add_date', 'fin_date', 'name', 'discription', 'project_id']
 
+    def __del__(self):
+        super().__del__()
+
     def insert_task(
         self,
         priority: int,
@@ -66,6 +69,3 @@ class TaskDataBase(DataBase):
 
     def delete_all(self) -> list[tuple]:
         return self.delete_from_table('task')
-
-    def __del__(self):
-        super().__del__()
