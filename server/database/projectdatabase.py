@@ -6,6 +6,7 @@ class ProjectDataBase(DataBase):
     def __init__(self) -> None:
         super().__init__()
         self.keys = ['name', 'discription', 'due_date']
+        self.table_name = 'project'
 
     def __del__(self) -> None:
         super().__del__()
@@ -15,6 +16,25 @@ class ProjectDataBase(DataBase):
 
     def at_to_data(self, id: int) -> Project:
         return Project.from_tuple(self.at(id))
+
+    def insert_project(
+        self,
+        name: str,
+        discription: str,
+        due_date: str
+    ):
+        keys = ''
+        for i in range(len(self.keys) - 1):
+            keys += self.keys[i] + ', '
+        keys += self.keys[len(self.keys) - 1]
+
+        sql = 'INSERT INTO project (' + keys + ') VALUES (' \
+            + '"' + name + '", ' \
+            + '"' + discription + '", ' \
+            + 'date("' + due_date + '"));'
+        print(sql)
+
+        self.send_query(sql)
 
     def get_project(self, id: int) -> str:
         return self.send_query('select * from project where id = ' + str(id) + ';')[0]
@@ -26,4 +46,7 @@ class ProjectDataBase(DataBase):
         return self.send_query('select id from project where name = "' + str(name) + '";')[0][0]
 
     def get_all(self) -> list[tuple]:
-        return self.show_table('project')
+        return self.show_table()
+
+    def delete_all(self) -> list[tuple]:
+        return self.delete_from_table()

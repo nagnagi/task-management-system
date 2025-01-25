@@ -2,11 +2,14 @@ from database.database import DataBase
 from datetime import datetime
 
 from database.dataclasses.task import Task
+from database.dataclasses.project import Project
+from database.projectdatabase import ProjectDataBase
 
 class TaskDataBase(DataBase):
     def __init__(self):
         super().__init__()
         self.keys = ['fin', 'priority', 'add_date', 'fin_date', 'name', 'discription', 'project_id']
+        self.table_name = 'task'
 
     def __del__(self):
         super().__del__()
@@ -70,7 +73,11 @@ class TaskDataBase(DataBase):
         return self.send_query('select id from task where name = "' + str(name) + '";')[0][0]
 
     def get_all(self) -> list[tuple]:
-        return self.show_table('task')
+        return self.show_table()
+
+    def get_project(self, id: int) -> Project:
+        print(ProjectDataBase().at(self[id].project_id))
+        return Project.from_tuple(ProjectDataBase().at(self[id].project_id))
 
     def delete_all(self) -> list[tuple]:
-        return self.delete_from_table('task')
+        return self.delete_from_table()
