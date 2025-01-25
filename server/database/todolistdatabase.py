@@ -11,6 +11,7 @@ class ToDoListDataBase(DataBase):
         super().__init__()
         self.keys = ['todo_id', 'add_date']
         self.table_name = 'todolist'
+        self.recent = self.send_query('select max(id) from todolist')[0][0]
 
     def __del__(self):
         super().__del__()
@@ -25,7 +26,7 @@ class ToDoListDataBase(DataBase):
         return ToDo.from_tuple(ToDoDataBase().at(self[id].todo_id))
 
     def create_new_todo(self):
-        todo_id = self.send_query('select max(id) from todolist')[0][0]
+        self.recent = todo_id = self.send_query('select max(id) from todolist')[0][0]
         result = self.send_query(
             'create table todo'
             + str(todo_id)

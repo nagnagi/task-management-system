@@ -28,6 +28,8 @@ class CommandLine:
         if words[0] == 'new':
             return self.new(words[1:])
         elif words[0] == 'get':
+            return self.get(words[1:])
+        elif words[0] == 'set':
             pass
         elif words[0] == 'delete':
             pass
@@ -72,3 +74,15 @@ class CommandLine:
 
     def new_todo(self, words: list[str]):
         return self.todolist_db.create_new_todo()
+
+    def get(self, words: list[str]):
+        if words[0] == 'project':
+            return list(map(Project.from_tuple, self.project_db.get_all()))
+        elif words[0] == 'task':
+            return list(map(Task.from_tuple, self.task_db.get_all()))
+        elif words[0] == 'todolist':
+            return list(map(ToDoList.from_tuple, self.todolist_db.get_all()))
+        elif words[0] == 'todo':
+            self.todo_db = ToDoDataBase(int(words[1]))
+            return list(map(ToDo.from_tuple, self.todo_db.get_all()))
+
