@@ -7,6 +7,16 @@ class DataBase:
         self.connection = sqlite3.connect(dbpath)
         self.cursor = self.connection.cursor()
 
+    def __del__(self):
+        self.cursor.close()
+        self.connection.close()
+
+    def __getitem__(self, index: int) -> tuple:
+        return self.at(index)
+
+    def at(self, id: int) -> tuple:
+        return self.send_query('select * from task where id = ' + str(id) + ';')[0]
+
     def show_table(self, table_name: str) -> list[tuple]:
         return self.send_query('select * from ' + table_name + ';')
 
@@ -18,7 +28,3 @@ class DataBase:
         result = self.cursor.fetchall()
         self.connection.commit()
         return result
-
-    def __del__(self):
-        self.cursor.close()
-        self.connection.close()

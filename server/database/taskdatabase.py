@@ -55,9 +55,6 @@ class TaskDataBase(DataBase):
             return True
         return False
 
-    def get_task(self, id: int) -> str:
-        return self.send_query('select * from task where id = ' + str(id) + ';')[0]
-
     def get_name(self, id: int) -> str:
         return self.send_query('select name from task where id = ' + str(id) + ' ;')[0][0]
 

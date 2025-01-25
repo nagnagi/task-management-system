@@ -15,8 +15,8 @@ ic(task_db.get_name(1))
 
 task1_id = task_db.get_id("Test Task 1")
 task_db.check(task1_id)
-ic(task_db.get_task(task1_id))
+ic(task_db[task1_id])
 task_db.revert(task1_id)
-ic(task_db.get_task(task1_id))
+ic(task_db[task1_id])
 
 task_db.delete_all()
