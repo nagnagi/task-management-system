@@ -28,6 +28,9 @@ class ToDoDataBase(DataBase):
     def get_task(self, id: int) -> Task:
         return Task.from_tuple(TaskDataBase().at(self[id].task_id))
 
+    def drop(self):
+        return self.send_query('drop table ' + self.table_name + ';')
+
     def insert_todo(
         self,
         task_id: int

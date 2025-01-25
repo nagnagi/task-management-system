@@ -32,7 +32,7 @@ class CommandLine:
         elif words[0] == 'set':
             return self.set(words[1:])
         elif words[0] == 'delete':
-            pass
+            return self.delete(words[1:])
         elif words[0] == 'check':
             pass
 
@@ -93,3 +93,14 @@ class CommandLine:
     def set_todo(self, words: list[str]):
         self.todo_db = ToDoDataBase(int(words[0]))
         return self.todo_db.insert_todo(int(words[1]))
+
+    def delete(self, words: list[str]):
+        if words[0] == 'project':
+            return self.project_db.delete_at(int(words[1]))
+        elif words[0] == 'task':
+            return self.task_db.delete_at(int(words[1]))
+        elif words[0] == 'todolist':
+            return self.todolist_db.delete_at(int(words[1]))
+        elif words[0] == 'todo':
+            self.todo_db = ToDoDataBase(words[1])
+            return self.todo_db.delete_at(int(words[2]))

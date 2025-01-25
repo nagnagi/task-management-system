@@ -19,6 +19,10 @@ class ToDoListDataBase(DataBase):
     def __getitem__(self, index: int) -> ToDoList:
         return self.at_to_data(index)
 
+    def delete_at(self, id: int):
+        ToDoDataBase(self[id].todo_id).drop()
+        return self.send_query('delete from ' + self.table_name + ' where id = ' + str(id) + ';')
+
     def at_to_data(self, id: int) -> ToDoList:
         return ToDoList.from_tuple(self.at(id))
 
