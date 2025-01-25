@@ -8,7 +8,10 @@ class DataBase:
         self.cursor = self.connection.cursor()
 
     def show_table(self, table_name: str) -> list[tuple]:
-        return self.send_query('select * from ' + table_name)
+        return self.send_query('select * from ' + table_name + ';')
+
+    def delete_from_table(self, table_name: str) -> None:
+        self.send_query('delete from ' + table_name + ' where 1;')
 
     def send_query(self, query: str) -> list[tuple]:
         self.cursor.execute(query)
