@@ -40,7 +40,7 @@ class CommandLine:
         elif words[0] == 'task':
             return self.new_task(words[1:])
         elif words[0] == 'todo':
-            pass
+            return self.new_todo(words[1:])
 
     def new_project(self, words: list[str]):
         if len(words) == 0:
@@ -65,7 +65,10 @@ class CommandLine:
                     continue
                 args.append(input(self.task_db.keys[i] + '?> '))
             return self.task_db.insert_task(*args)
-        elif len(words) < len(self.project_db.keys):
+        elif len(words) < len(self.task_db.keys):
             raise Exception('Error') # [TODO] エラー作る
         else:
             return self.task_db.insert_task(*words)
+
+    def new_todo(self, words: list[str]):
+        return self.todolist_db.create_new_todo()

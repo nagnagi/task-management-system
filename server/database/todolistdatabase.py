@@ -24,6 +24,16 @@ class ToDoListDataBase(DataBase):
     def get_todo(self, id: int) -> ToDo:
         return ToDo.from_tuple(ToDoDataBase().at(self[id].todo_id))
 
+    def create_new_todo(self):
+        todo_id = self.send_query('select max(id) from todolist')[0][0]
+        result = self.send_query(
+            'create table todo'
+            + str(todo_id)
+            + ' (task_id integer)'
+        )
+        self.insert_todolist(todo_id)
+        return result
+
     def insert_todolist(
         self,
         todo_id: int
@@ -36,6 +46,5 @@ class ToDoListDataBase(DataBase):
         sql = 'INSERT INTO ' + self.table_name + ' (' + keys + ') VALUES (' \
             + str(todo_id) + ', ' \
             + 'date("' + str(datetime.now().date()) + '"));'
-        print(sql)
 
         self.send_query(sql)
