@@ -6,6 +6,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from database.taskdatabase import TaskDataBase
 from database.projectdatabase import ProjectDataBase
+from database.tododatabase import ToDoDataBase
 from database.todolistdatabase import ToDoListDataBase
 
 task_db = TaskDataBase()
@@ -27,9 +28,15 @@ project_db.insert_project("Task Management System", "skdlfjawe", "2025-01-25")
 ic(project_db.get_project(1))
 ic(task_db.get_project(2))
 
+todo_db = ToDoDataBase()
+todo_db.insert_todo(1)
+todo_db.insert_todo(2)
+ic(todo_db[1])
+
 todolist_db = ToDoListDataBase()
 todolist_db.insert_todolist(1)
 ic(todolist_db[1])
+ic(todolist_db.get_todo(1))
 
 task_db.delete_all()
 project_db.delete_all()

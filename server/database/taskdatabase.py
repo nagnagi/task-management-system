@@ -72,5 +72,4 @@ class TaskDataBase(DataBase):
         return self.send_query('select id from task where name = "' + str(name) + '";')[0][0]
 
     def get_project(self, id: int) -> Project:
-        print(ProjectDataBase().at(self[id].project_id))
         return Project.from_tuple(ProjectDataBase().at(self[id].project_id))

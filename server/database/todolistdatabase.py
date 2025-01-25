@@ -1,9 +1,10 @@
 import sqlite3
 from datetime import datetime
 
+from database.dataclasses.todo import ToDo
 from database.dataclasses.todolist import ToDoList
 from database.database import DataBase
-from database.taskdatabase import TaskDataBase
+from database.tododatabase import ToDoDataBase
 
 class ToDoListDataBase(DataBase):
     def __init__(self):
@@ -19,6 +20,9 @@ class ToDoListDataBase(DataBase):
 
     def at_to_data(self, id: int) -> ToDoList:
         return ToDoList.from_tuple(self.at(id))
+
+    def get_todo(self, id: int) -> ToDo:
+        return ToDo.from_tuple(ToDoDataBase().at(self[id].todo_id))
 
     def insert_todolist(
         self,
