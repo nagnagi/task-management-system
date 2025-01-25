@@ -7,10 +7,14 @@ from database.database import DataBase
 from database.taskdatabase import TaskDataBase
 
 class ToDoDataBase(DataBase):
-    def __init__(self):
+    def __init__(self, id: int | None = None):
         super().__init__()
+        try:
+            self.cursor.execute('create table todo' + str(id) + ' (id integer primary key, task_id integer);')
+        except sqlite3.OperationalError:
+            pass
         self.keys = ['task_id']
-        self.table_name = 'todo'
+        self.table_name = 'todo' + str(id)
 
     def __del__(self):
         super().__del__()
