@@ -38,6 +38,8 @@ class CommandLine:
             return self.delete(words[1:])
         elif words[0] == 'check':
             return self.check(words[1:])
+        elif words[0] == 'revert':
+            return self.revert(words[1:])
         elif words[0] == 'help':
             return self.help()
 
@@ -127,6 +129,13 @@ class CommandLine:
 
     def check_task(self, words: list[str]):
         return self.task_db.check(int(words[0]))
+
+    def revert(self, words: list[str]):
+        if words[0] == 'task':
+            return self.revert_task(words[1:])
+
+    def revert_task(self, words: list[str]):
+        return self.task_db.revert(int(words[0]))
 
     def help(self):
         with open(str(Path(__file__).parent) + '/help.txt', 'r', encoding='utf-8') as f:
