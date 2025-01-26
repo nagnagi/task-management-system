@@ -11,5 +11,8 @@ commandline = CommandLine()
 
 engine = Latex()
 
-ic(engine.from_id(commandline.exec('get todolist ' + str(2)).todo_id))
+lines = engine.from_id(commandline.exec('get todolist ' + str(2)).todo_id)
+print(lines)
+code = engine.assemble(lines)
+print(code)
 engine.compile()

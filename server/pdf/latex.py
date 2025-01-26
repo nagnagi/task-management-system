@@ -35,3 +35,18 @@ class Latex:
             lines.append(f'{fin} ({priority}) {add_date} {fin_date} {name} {project_name}')
 
         return lines
+
+    def assemble(self, lines: list[str]) -> str:
+        code = [
+            '\\documentclass[paper=a5paper,fontsize=20pt,head_space=20mm,foot_space=20mm,gutter=25mm,fore-edge=25mm]{jlreq}',
+            '\\usepackage{luatexja-fontspec}',
+            '\\setmainfont{SourceHanCodeJP-Regular}[Scale=0.9]',
+            '\\setmainjfont{SourceHanCodeJP-Regular}[Scale=0.9]',
+            '\\begin{document}'
+        ]
+        for line in lines:
+            code.append(line)
+        code.append('\\end{document}')
+        for i in range(len(code)):
+            code[i] += '\n'
+        return ''.join(code)
