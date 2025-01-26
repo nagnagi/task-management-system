@@ -26,7 +26,7 @@ class Latex:
         lines: list[str] = []
         for item in todo:
             task: Task = commandline.exec('get task ' + str(item.task_id))
-            fin = '\u2611' if task.fin else '\u25a1'
+            fin = '\\checkmark\\;' if task.fin else '\\Box\\;'
             priority = chr(ord('A') + task.priority)
             add_date = task.add_date
             fin_date = task.fin_date if task.fin_date else ''
@@ -38,15 +38,22 @@ class Latex:
 
     def assemble(self, lines: list[str]) -> str:
         code = [
-            '\\documentclass[paper=a5paper,fontsize=20pt,head_space=20mm,foot_space=20mm,gutter=25mm,fore-edge=25mm]{jlreq}',
+            '\\documentclass[paper=a5paper,fontsize=9pt,linegap=11pt,head_space=20mm,foot_space=20mm,gutter=15mm,fore-edge=15mm]{jlreq}',
             '\\usepackage{luatexja-fontspec}',
-            '\\setmainfont{SourceHanCodeJP-Regular}[Scale=0.9]',
-            '\\setmainjfont{SourceHanCodeJP-Regular}[Scale=0.9]',
+            '\\usepackage{amssymb}',
+            '\\setmainfont{SourceHanCodeJP-Regular}',
+            '\\setmainjfont{SourceHanCodeJP-Regular}',
+            '\\thispagestyle{empty}',
             '\\begin{document}'
         ]
         for line in lines:
-            code.append(line)
+            code.append(line + '\n')
         code.append('\\end{document}')
         for i in range(len(code)):
             code[i] += '\n'
         return ''.join(code)
+
+    def save(self, code: str) -> str:
+        with open(self.file, 'w', encoding='utf-8') as f:
+            f.write(code)
+        return code
