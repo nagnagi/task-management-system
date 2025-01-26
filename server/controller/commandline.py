@@ -13,15 +13,11 @@ from database.taskdatabase import TaskDataBase
 from database.tododatabase import ToDoDataBase
 from database.todolistdatabase import ToDoListDataBase
 
-from pdf.engine import Engine
-from pdf.latex import Latex
-
 class CommandLine:
     def __init__(
         self,
         filein: TextIOWrapper | None = None,
         fileout: TextIOWrapper | None = None,
-        print_engine: Engine | None = None,
         show_prompt: bool = True
     ):
         self.project_db = ProjectDataBase()
@@ -37,11 +33,6 @@ class CommandLine:
             self.fileout = sys.stdout
         else:
             self.fileout = fileout
-
-        if print_engine is None:
-            self.engine = Latex()
-        else:
-            self.engine = print_engine
 
         self.show_prompt = show_prompt
 

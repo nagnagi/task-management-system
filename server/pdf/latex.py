@@ -65,3 +65,4 @@ class Latex(Engine):
         code = self.assemble(lines)
         self.save(code)
         self.compile()
+        return self.file
