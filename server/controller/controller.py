@@ -1,10 +1,10 @@
 import sys
 import os
 
-from controller.commandline import CommandLine
+from controller.printablecmd import PrintableCommandLine
 
 def execute_with_commandline():
-    commandline = CommandLine()
+    commandline = PrintableCommandLine()
     try:
         while True:
             if result := commandline.input():

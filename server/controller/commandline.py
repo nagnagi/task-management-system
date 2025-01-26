@@ -13,7 +13,6 @@ from database.taskdatabase import TaskDataBase
 from database.tododatabase import ToDoDataBase
 from database.todolistdatabase import ToDoListDataBase
 
-
 class CommandLine:
     def __init__(
         self,
@@ -28,8 +27,12 @@ class CommandLine:
 
         if filein is None:
             self.filein = sys.stdin
+        else:
+            self.filein = filein
         if fileout is None:
             self.fileout = sys.stdout
+        else:
+            self.fileout = fileout
 
         self.show_prompt = show_prompt
 
