@@ -57,3 +57,11 @@ class Latex:
         with open(self.file, 'w', encoding='utf-8') as f:
             f.write(code)
         return code
+
+    def gen(self, id: int):
+        lines = self.from_id(id)
+        print(lines)
+        code = self.assemble(lines)
+        print(code)
+        self.save(code)
+        self.compile()
