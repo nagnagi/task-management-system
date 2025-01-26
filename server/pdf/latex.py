@@ -60,8 +60,6 @@ class Latex:
 
     def gen(self, id: int):
         lines = self.from_id(id)
-        print(lines)
         code = self.assemble(lines)
-        print(code)
         self.save(code)
         self.compile()
