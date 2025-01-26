@@ -44,6 +44,10 @@ class CommandLine:
         words = command.split()
         return self.select_method(words)
 
+    def exec(self, command: str):
+        words = command.split()
+        return self.select_method(words)
+
     def select_method(self, words: list[str]):
         if words[0] == 'new':
             return self.new(words[1:])

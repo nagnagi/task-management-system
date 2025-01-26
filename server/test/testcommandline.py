@@ -6,6 +6,8 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from controller.commandline import CommandLine
 
+command_line = CommandLine()
+ic(command_line.exec("help"))
+
 while True:
-    command_line = CommandLine()
     ic(command_line.input())
