@@ -2,3 +2,5 @@
 *.exe
 __pycache__
 *.sqlite
+*.tex
+out
