@@ -7,7 +7,9 @@ from database.dataclasses.todo import ToDo
 from database.dataclasses.task import Task
 from database.dataclasses.project import Project
 
-class Latex:
+from pdf.engine import Engine
+
+class Latex(Engine):
     def __init__(self):
         self.parent = str(Path(__file__).parent)
         self.outdir = self.parent + '/out/'
